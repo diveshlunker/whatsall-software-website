@@ -15,6 +15,57 @@
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@800&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@900&display=swap');
     </style>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js"></script>
+    <!-- <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-analytics.js"></script> -->
+    <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyALV_Redq-Z9h4uU8NF5pph4vSlY1JbD-k",
+            authDomain: "whatsall-website.firebaseapp.com",
+            projectId: "whatsall-website",
+            storageBucket: "whatsall-website.appspot.com",
+            messagingSenderId: "37675283987",
+            appId: "1:37675283987:web:07895a85288e10fd0871e6",
+            measurementId: "G-RLR9E94FHK"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        //   const analytics = getAnalytics(app);
+        //   firebase.initializeApp(firebaseConfig);
+
+        // Reference to the messages collection
+        const db = firebase.firestore();
+        var userRef = db.collection("messages");
+        // var messagesRef = firebase.database().ref('messages');
+
+        // Save message to Firebase
+        async function saveMessage(name, email, message) {
+            const contactMessages = {name, email, message};
+            await userRef.add(contactMessages);
+        }
+
+
+      // Handle form submission
+    function submitForm(event) {
+        event.preventDefault();
+        var name = document.getElementById('name').value;
+        var email = document.getElementById('email').value;
+        var message = document.getElementById('message').value;
+  
+        saveMessage(name, email, message);
+  
+        // Clear form fields
+        document.getElementById('contactForm').reset();
+        alert("Thank you for reaching out.\nWe will check your message and get back in 48 business hours.")
+  
+        // Show success message
+        // document.getElementById('successMessage').style.display = 'block';
+      }
+
+    </script>
+    
     <link rel="stylesheet" href="css/contactus.css">
     </head>
     <body>
@@ -51,35 +102,35 @@
                 </div>
                     <div class="contactForm">
                         <h2>Send a Message</h2>
-                        <div class="formBox">
-                        <div class="inputBox w50">
-                            <input type="text" name="" required>
-                            <span>First Name</span>
-                        </div>
-                        <div class="inputBox w50">
-                            <input type="text" required>
-                            <span>Last Name</span>
-                        </div>
-                        <div class="inputBox w50">
-                            <input type="email" required>
-                            <span>Email Address</span>
-                        </div>
-                        <div class="inputBox w50">
-                            <input type="text" required>
-                            <span>Mobile Number</span>
-                        </div>
-                        <div class="inputBox w100">
-                            <textarea required></textarea>
-                            <span>Write your message here...</span>
-                        </div>
-                        <div class="inputBox w100">
-                            <input type="submit" value="Send">
-                        </div>
+                        <form id="contactForm" class="formBox">
+                            <div class="inputBox w50">
+                                <input type="text" id="name" name="" required>
+                                <span>Name</span>
+                            </div>
+                            <div class="inputBox w50">
+                                <input type="email" id="email" required>
+                                <span>Email Address</span>
+                            </div>
+                            <div class="inputBox w50">
+                                <input type="text" id="phoneNumber" required>
+                                <span>Mobile Number</span>
+                            </div>
+                            <div class="inputBox w100">
+                                <textarea required id="message"></textarea>
+                                <span>Write your message here...</span>
+                            </div>
+                            <div class="inputBox w100">
+                                <input type="submit" value="Send">
+                            </div>
+                        </form>
                     </div>
-                </div>
-                    
-                    
+                    <!-- <div id="successMessage">Message sent successfully!</div>                     -->
              
         </section>
+        <script>
+            // Add event listener for form submission
+            document.getElementById('contactForm').addEventListener('submit', submitForm);
+          </script>
+
     </body>
 </html>

@@ -17,6 +17,14 @@ section
     background-color: #095a55;
 
 }
+
+#successMessage {
+    display: none;
+    color: green;
+    margin-top: 10px;
+  }
+
+  
 section::before
 {
     content: '';
