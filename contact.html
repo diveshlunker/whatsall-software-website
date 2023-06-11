@@ -41,9 +41,12 @@
         // var messagesRef = firebase.database().ref('messages');
 
         // Save message to Firebase
-        async function saveMessage(name, email, message) {
-            const contactMessages = {name, email, message};
-            await userRef.add(contactMessages);
+        async function saveMessage(name, email, phoneNumber, message) {
+            // var timestamp = firebase.firestore.FieldValue.serverTimestamp();
+            var timestamp = new Date();
+            const contactMessages = {name:name, email:email, phoneNumber:phoneNumber, message:message};
+            db.collection("messages").doc(""+timestamp).set(contactMessages);
+            // await userRef.add(contactMessages);
         }
 
 
@@ -53,8 +56,9 @@
         var name = document.getElementById('name').value;
         var email = document.getElementById('email').value;
         var message = document.getElementById('message').value;
+        var phoneNumber = document.getElementById('phoneNumber').value;
   
-        saveMessage(name, email, message);
+        saveMessage(name, email, phoneNumber, message);
   
         // Clear form fields
         document.getElementById('contactForm').reset();
@@ -87,7 +91,7 @@
                             </li>
                             <li>
                                 <span><img src="./images/call.png"></span>
-                                <span>8610417194</span>
+                                <span>+91-8610417194</span>
                             </li>
 
                         </ul>
